@@ -89,7 +89,7 @@ public:
 
         for(unsigned int x = 0; x < map.get_map().size(); ++x)
         {
-            for(unsigned int y = 0; y < map.get_map()[x].size(); ++y, ++number_of_groups)
+            for(unsigned int y = 0; y < map.get_map()[x].size(); ++y)
             {
                 grouping_t point_group = NOT_GROUPED;
                 point_t starting_point(x, y);
@@ -102,6 +102,7 @@ public:
                 if(groups.get_location(starting_point, point_group) &&
                         point_group == NOT_GROUPED)
                 {
+                    number_of_groups++;
                     recursive_find_group(starting_point, number_of_groups, current_data);
                 }
                 else

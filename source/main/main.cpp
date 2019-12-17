@@ -93,13 +93,38 @@ int incremental_test(void)
 
     std::cout<<"Exit Success!"<<std::endl;
 
-    return 1;
+    return EXIT_SUCCESS;
 }
 
 int main (void)
 {
+    int c1[] = { 0, 10, 10,  3,  2,  5,  6};
+    int c2[] = { 0,  1, 10,  3,  4,  6,  8};
+    int c3[] = { 0,  1, 10, 10,  4,  7,  8,  8};
+    int c4[] = { 0, 10, 10,  3,  3,  3,  8,  2};
+    int c5[] = { 0, 10, 10,  3,  4,  10, 3};
 
-    return 1;
+    Map<int> map;
+
+    map.push(std::vector<int>(c1, c1 + 7));
+    map.push(std::vector<int>(c2, c2 + 7));
+    map.push(std::vector<int>(c3, c3 + 8));
+    map.push(std::vector<int>(c4, c4 + 8));
+    map.push(std::vector<int>(c5, c5 + 7));
+
+    std::cout<<"Map:"<<std::endl;
+    map.print_map();
+
+    GroupCounter<int> counter(map, [] (const int lhs, const int rhs) {return lhs == rhs;});
+    std::cout<<"Groups before processing:"<<std::endl;
+    counter.print_groups();
+
+    std::cout<<"Groups after processing:"<<std::endl;
+    counter.find_groups();
+    counter.print_groups();
+
+    std::cout<<"Exit Success!"<<std::endl;
+    return EXIT_SUCCESS;
 }
 
 
