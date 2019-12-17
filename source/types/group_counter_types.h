@@ -24,8 +24,11 @@
 #include <climits>
 #include <iostream>
 #include <algorithm>
+#include <functional>
+
 
 typedef unsigned int grouping_t;
+
 const grouping_t NOT_GROUPED = UINT_MAX;
 
 struct point_t
@@ -60,17 +63,30 @@ public:
 
     bool get_location(point_t point, T& value_out)
     {
-        try
+        if(point.x < map.size() && point.y < map[point.x].size())
         {
             value_out = map[point.x][point.y];
+            return true;
         }
-        catch(...)
+        else
         {
             return false;
         }
-
-        return true;
     }
+
+    bool set_location(point_t point, T value)
+    {
+        if(point.x < map.size() && point.y < map[point.x].size())
+        {
+            map[point.x][point.y] = value;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     auto& get_map() const
     {

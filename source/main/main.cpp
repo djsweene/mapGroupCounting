@@ -22,7 +22,7 @@
 #include "../types/group_counter_types.h"
 #include "../group_counter/GroupCounter.h"
 
-int main(void)
+int incremental_test(void)
 {
     std::cout<<"hello world!"<<std::endl;
 
@@ -54,8 +54,9 @@ int main(void)
     columns.clear();
     std::cout<<"---------------------"<<std::endl;
 
-    GroupCounter<int> counter(test_map);
+    GroupCounter<int> counter(test_map, [] (const int lhs, const int rhs) {return lhs == rhs;});
     point_t point(1, 3);
+    point_t new_point;
     int value;
 
     counter.print_map();
@@ -64,20 +65,26 @@ int main(void)
     test_map.get_location(point, value);
     std::cout<<"point = "<<value<<std::endl;
 
-    counter.get_north(point, value);
+    counter.get_north(point, value, new_point);
     std::cout<<"north = "<<value<<std::endl;
 
-    counter.get_south(point, value);
+    counter.get_south(point, value, new_point);
     std::cout<<"south = "<<value<<std::endl;
 
-    counter.get_east(point, value);
+    counter.get_east(point, value, new_point);
     std::cout<<"east = "<<value<<std::endl;
 
-    counter.get_west(point, value);
+    counter.get_west(point, value, new_point);
     std::cout<<"west = "<<value<<std::endl;
 
     std::cout<<"---------------------"<<std::endl;
     counter.print_map();
+    std::cout<<"---------------------"<<std::endl;
+    counter.print_groups();
+    std::cout<<"---------------------"<<std::endl;
+    counter.find_groups();
+    std::cout<<"---------------------"<<std::endl;
+    counter.print_groups();
     std::cout<<"---------------------"<<std::endl;
 
     std::cout<<"Cleared Map:"<<std::endl;
@@ -85,6 +92,12 @@ int main(void)
     test_map.print_map();
 
     std::cout<<"Exit Success!"<<std::endl;
+
+    return 1;
+}
+
+int main (void)
+{
 
     return 1;
 }
