@@ -125,7 +125,7 @@ public:
 
         for(auto& x: map)
         {
-            max = std::max(max, x.size());
+            max = std::max(max, static_cast<unsigned int>(x.size()));
         }
 
         return max;
